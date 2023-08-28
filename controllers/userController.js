@@ -1,4 +1,4 @@
-const passport = require('passport');
+require('dotenv').config();
 const User = require('../models/user');
 const { body, validationResult } = require('express-validator');
 const asyncHandler = require('express-async-handler');
@@ -52,3 +52,22 @@ exports.isAdmin = (req, res, next) => {
     }
     res.redirect('/auth/login');
 };
+
+exports.joinGet = (req, res) => {
+    res.render('join', { title: 'Join the Club' });
+};
+
+exports.joinPost = asyncHandler(async (req, res) => {
+    const passcode = req.body.passcode;
+
+    if (passcode === process.env.CLUB_PASSCODE) {
+        req.user.isMember = true;
+        await req.user.save();
+        req.flash('success', 'You have joined the club!');
+        res.redirect('/');
+    } else {
+        req.flash('error', 'Incorrect passcode. Please try again.');
+        res.redirect('/join');
+    }
+});
+

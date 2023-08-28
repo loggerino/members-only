@@ -4,4 +4,19 @@ html
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
+    a.navbar-brand(href='/') Private Club
+    ul.navbar-nav
+      li.nav-item
+        a.nav-link(href='/') Home
+      if user
+        li.nav-item
+          a.nav-link(href='/join') Join the Club
+        li.nav-item
+          a.nav-link(href='/auth/logout') Logout
+      else
+        li.nav-item
+          a.nav-link(href='/auth/login') Log In
+        li.nav-item
+          a.nav-link(href='/auth/signup') Sign Up
+
     block content
