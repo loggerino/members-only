@@ -1,0 +1,24 @@
+extends layout
+
+block content
+  h1 Login
+  
+  if message
+    p.error= message
+
+  if messages && messages.error
+    p.error= messages.error
+
+  form(method='POST', action='/auth/login')
+    div.form-group
+      label(for='email') Email: 
+      input#email.form-control(type='text', name='email')
+
+    div.form-group
+      label(for='password') Password:
+      input#password.form-control(type='password', name='password')
+
+    button.btn.btn-primary(type='submit') Login
+
+  p Don't have an account? 
+  a.btn.btn-secondary(href='/auth/signup') Sign Up

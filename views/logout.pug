@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  h1 Logout
+  
+  p Are you sure you want to logout?
+  
+  form(method='POST', action='/auth/logout')
+    button.btn.btn-danger(type='submit') Logout
