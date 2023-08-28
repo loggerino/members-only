@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  h1 Join the Club
+
+  if message
+    p.error= message
+
+  form(method='POST', action='/join')
+    div.form-group
+      label(for='passcode') Enter the Passcode:
+      input#passcode.form-control(type='password', name='passcode')
+
+    button.btn.btn-primary(type='submit') Join
