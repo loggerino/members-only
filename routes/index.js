@@ -4,11 +4,12 @@ const userController = require('../controllers/userController');
 
 /* GET home page. */
 router.get('/', (req, res) => {
-  if (!req.isAuthenticated()) {
-    res.render('index', { title: 'Antartic Base' });
+  const isAuthenticated = req.isAuthenticated();
+  if (!isAuthenticated) {
+    res.render('index', { title: 'Antartic Base', isAuthenticated });
   } else {
     if (req.user.isMember) {
-      res.render('dashboard', { title: 'Member Dashboard' });
+      res.render('dashboard', { title: 'Member Dashboard', isAuthenticated });
     } else {
       res.render('join', { title: 'Join the Club' });
     }
