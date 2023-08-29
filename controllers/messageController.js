@@ -31,3 +31,32 @@ exports.createMessagePost = [
         }
     })
 ]
+
+exports.getDeleteMessage = asyncHandler(async (req, res) => {
+    const message = await Message.findById(req.params.id);
+
+    if (!message) {
+        res.status(404).send('Message not found');
+        return;
+    }
+
+    res.render('delete', { title: 'Confirm Message Deletion', message });
+});
+
+exports.postDeleteMessage = asyncHandler(async (req, res) => {
+    const message = await Message.findById(req.params.id);
+
+    if (!message) {
+        res.status(404).send('Message not found');
+        return;
+    }
+
+    if (message.author.equals(req.user._id) || req.user.isAdmin) {
+        await Message.deleteOne({ _id: message._id });
+        req.flash('success', 'Message deleted successfully.');
+    } else {
+        req.flash('error', 'You do not have permission to delete this message.');
+    }
+
+    res.redirect('/');
+});
