@@ -1,5 +1,24 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to the #{title}
+  h1 Welcome to the Club
+  
+  if isAuthenticated
+    p Welcome, #{user.firstName}! Here are the latest messages from members:
+    each message in messages
+      div.message
+        p= message.text
+        span.date= new Date(message.timestamp).toLocaleDateString()
+        if user.isMember
+          span.author= message.author.firstName
+        else
+          span.author= "Club Member"
+    p
+      if user.isMember
+        a.btn.btn-primary(href='/messages/create') Create a New Message
+      else
+        a.btn.btn-primary(href='/join') Join the Club to Create a New Message
+  else
+    p You're not a member yet. Join the club to see the author of the messages.
+    p
+      a.btn.btn-secondary(href='/auth/signup') Sign Up
