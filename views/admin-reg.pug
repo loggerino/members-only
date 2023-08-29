@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  h1 Admin Passcode
+  
+  if message
+    p.error= message
+  
+  form(method='POST', action='/admin/admin-reg')
+    div.form-group
+      label(for='passcode') Enter the Admin Passcode:
+      input#passcode.form-control(type='password', name='passcode')
+      
+    button.btn.btn-primary(type='submit') Submit

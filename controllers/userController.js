@@ -71,3 +71,26 @@ exports.joinPost = asyncHandler(async (req, res) => {
     }
 });
 
+exports.updateAdminStatusGet = (req, res) => {
+    const message = req.flash('error');
+    res.render('admin-reg', { title: 'Admin Passcode', message });
+};
+
+
+exports.updateAdminStatusPost = [
+    body('passcode').trim().notEmpty().withMessage('Passcode is required.'),
+    asyncHandler(async (req, res) => {
+        const passcode = req.body.passcode;
+
+        if (passcode === process.env.ADMIN_PASSCODE) {
+            req.user.isAdmin = true;
+            await req.user.save();
+            req.flash('success', 'You are now an admin!');
+        } else {
+            req.flash('error', 'Incorrect passcode. Please try again.');
+        }
+
+        res.redirect('/');
+    })
+];
+

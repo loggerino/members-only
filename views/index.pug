@@ -11,6 +11,9 @@ block content
       span.date= new Date(message.timestamp).toLocaleDateString()
       if user && user.isMember
         span.author= message.author.firstName
+        if user.isAdmin
+        form(method='POST', action=`/messages/message/${message._id}/delete`)
+          button.btn.btn-danger(type='submit') Delete
       else
         span.author= "Club Member"
   p
