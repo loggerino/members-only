@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  h1 Create a New Message
+  
+  if message
+    p.success= message
+
+  form(method='POST', action='/messages/create')
+    div.form-group
+      label(for='title') Title:
+      input#title.form-control(type='text', name='title')
+
+    div.form-group
+      label(for='text') Message Text:
+      textarea#text.form-control(name='text', rows='4')
+
+    button.btn.btn-primary(type='submit') Create Message
