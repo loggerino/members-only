@@ -9,13 +9,11 @@ router.get('/', asyncHandler(async (req, res) => {
   const isAuthenticated = req.isAuthenticated();
   const user = req.user;
 
-  let messages = [];
-  if (isAuthenticated) {
-    messages = await Message.find().populate('author');
-  }
+  let messages = await Message.find().populate('author');
 
-  res.render('index', { title: 'Antartic Base', isAuthenticated, user, messages });
+  res.render('index', { title: 'Antarctic Base', isAuthenticated, user, messages });
 }));
+
 
 router.get('/join', userController.joinGet);
 router.post('/join', userController.joinPost);
